@@ -32,4 +32,5 @@ public class Calculate {
 		double toRadians = (operand9*(3.14159/180));
 		return toRadians;
 	}
+//Discriminant
 }
