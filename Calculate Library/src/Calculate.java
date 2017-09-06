@@ -22,4 +22,14 @@ public class Calculate {
 		double average3 = (operand5+operand6+operand7)/3;
 		return average3;
 	}
+//Change to Degrees
+	public static double toDegrees(double operand8) {
+		double toDegrees = (operand8*(180/3.14159));
+		return toDegrees;
+	}
+//Change to Radians
+	public static double toRadians(double operand9) {
+		double toRadians = (operand9*(3.14159/180));
+		return toRadians;
+	}
 }
