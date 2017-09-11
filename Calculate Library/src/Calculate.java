@@ -33,4 +33,26 @@ public class Calculate {
 		return toRadians;
 	}
 //Discriminant
+	public static double discriminant(double integer1, double integer2, double integer3) {
+		double discriminant = (integer2*integer2)-(4*integer1*integer3);
+		return discriminant;
+	}
+//To Improper Fraction
+	public static String toImproperFrac(int WholeNum, int Numerator, int Denominator) {
+		int NewNumorator = WholeNum*Denominator+Numerator;
+		return (NewNumorator+"/"+Denominator);
+	}
+//To Mixed Number
+	public static String toMixedNum(int Numerator, int Denominator) {
+		int wholeNum = Numerator/Denominator;
+		int newNumerator = Numerator%Denominator;
+		return (wholeNum+"_"+newNumerator+"/"+Denominator);
+	}
+//To FOIL
+	public static String foil(int a,int b,int c, int d) {
+		int first = a*c;
+		int second = (a*d)+(b*c);
+		int third = b*d;
+		return (first+"x^2"+"+"+second+"x"+"+"+third);
+	}
 }
