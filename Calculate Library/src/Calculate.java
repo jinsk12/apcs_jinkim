@@ -97,7 +97,7 @@ public class Calculate {
 		public static double round2(double num1){
 			num1 = num1 * 100;
 			num1 += .5;
-			
 			return(num1 / 100);
 		}
+//Part 3
 	}
