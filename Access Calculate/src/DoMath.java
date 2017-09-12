@@ -15,8 +15,23 @@ public class DoMath {
 		System.out.println(Calculate.toDegrees(3.14));
 		System.out.println("Change to Radians");
 		System.out.println(Calculate.toRadians(180));
-		//System.out.println("Discriminant);"
-		//System.out.println(Calculate.discriminant(something));
+		System.out.println("Discriminant:");
+		System.out.println(Calculate.discriminant(3,2,1));
+		System.out.println("To Improper Fraction:");
+		System.out.println(Calculate.toImproperFrac(2, 5, 7));
+		System.out.println("To Mixed Number:");
+		System.out.println(Calculate.toMixedNum(3,5));
+		System.out.println("FOIL:");
+		System.out.println(Calculate.foil(3, 2, 1, 5));
+		System.out.println("Is it Divisible?");
+		System.out.println(Calculate.isDivisibleBy(3,5));
+		System.out.println("Absolute Value:");
+		System.out.println(Calculate.absValue(-23));
+		System.out.println("Maximum of Two:");
+		System.out.println(Calculate.max(34, 3));
+		System.out.println("Maximum of Three:");
+		System.out.println(Calculate.max(3, 2.4, -8));
+		System.out.println("Round a Number:");
+		System.out.println(Calculate.round2(34.2));
 	}
-
 }
