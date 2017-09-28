@@ -183,4 +183,29 @@ public class Calculate {
 			return .5 * (number/intValue + intValue);
 		}
 	}
-}
+//Quadratic Formula method
+		public static String quadForm(int a, int b, int c) {
+			double discriminant = discriminant(a,b,c);
+			if(a == 0) {
+				throw new IllegalArgumentException("Is not a quadratic function");
+			}else { //if its zero for the squared then it cannot be quadratic
+				if(discriminant < 0) { //if the discriminant is less than one there will be no roots
+					return ("no real roots");
+				}
+			}
+			double rootNum1 = (-b+ sqrt(discriminant))/(2*a);
+			double rootNum2 = (-b- sqrt(discriminant))/(2*a);
+			if(rootNum1 != rootNum2) {
+				rootNum1 = round2(rootNum1);
+				rootNum2 = round2(rootNum2);
+				if(rootNum1 > rootNum2) {
+					return rootNum2 + " and " + rootNum1;
+				}else{
+					return rootNum1 + " and " + rootNum2;
+				}
+			}else{
+				rootNum1 = round2(rootNum1);
+				return rootNum1 +"";
+			}
+		}
+	}
