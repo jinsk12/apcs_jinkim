@@ -33,8 +33,19 @@ public class DoMath {
 		System.out.println(Calculate.max(34, 3));
 		System.out.println("Maximum of Three:");
 		System.out.println(Calculate.max(3, 2.4, -8));
+		System.out.println("Minimum of Two:");
+		System.out.println(Calculate.min(3,-8));
 		System.out.println("Round a Number:");
-		System.out.println(Calculate.round2(34.2));
-
+		System.out.println(Calculate.round2(2.33));
+		System.out.println("Exponent:");
+		System.out.println(Calculate.exponent(2,6));
+		System.out.println("Factorial:");
+		System.out.println(Calculate.factorial(5));
+		System.out.println("Prime:");
+		System.out.println(Calculate.isPrime(15));
+		System.out.println("GCF:");
+		System.out.println(Calculate.gcf(34,3));
+		System.out.println("Square:");
+		System.out.println(Calculate.sqrt(5));
 	}
 }
