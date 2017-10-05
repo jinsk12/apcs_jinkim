@@ -1,0 +1,51 @@
+//Jin Kim
+//10/4/17
+//2nd Period
+import java.util.Scanner;
+
+public class PairProgramming {
+	public static void main(String [] args) {
+		Scanner userInput=new Scanner(System.in);
+		int sum=0;
+		int numInputs;
+		String evens= " ";
+		int largestEven=-2147483648; //-2^31
+		boolean done= false;
+		System.out.print("Enter a number:");
+		int x=userInput.nextInt();
+		int min=x;
+		int max=x;
+		System.out.print("Done?");
+		String s=userInput.next();
+		if(s.equalsIgnoreCase("Yes")) {
+			done=true;
+		}
+		while(!done) {
+			System.out.println("How many numbers do you have?");
+			System.out.print("Enter a String of Numbers:");
+			x=userInput.nextInt();
+			if(x<min) {
+				min=x;
+		}
+			else if(x>max) {
+				max=x;
+			}
+			if(x%2==0) {
+				sum+=x;
+				if(x>largestEven) {
+					largestEven=x;
+				}
+			}
+		}
+		System.out.print("Done?");
+		s=userInput.next();
+		if(s.equalsIgnoreCase("Yes")) {
+			done=true;
+		}
+		System.out.println("The smallest number is " +min+ ".");
+		System.out.println("The largest number is "+max+ ".");
+		System.out.println("The sum of all even numbers entered is "+sum+ " and the largest even number is "+largestEven+ ".");
+		}
+		
+		
+	}
