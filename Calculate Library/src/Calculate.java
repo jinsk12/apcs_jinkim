@@ -14,14 +14,14 @@ public class Calculate {
 			return cube;
 		}
 //Average Double For Two Doubles
-		public static double average2(double operand3, double operand4) {
-			double average2 = (operand3+operand4)/2;
-			return average2;
+		public static double average(double operand3, double operand4) {
+			double average = (operand3+operand4)/2;
+			return average;
 		}
 //Average Double For Three Doubles
-		public static double average3(double operand5, double operand6, double operand7) {
-			double average3 = (operand5+operand6+operand7)/3;
-			return average3;
+		public static double average(double operand5, double operand6, double operand7) {
+			double average = (operand5+operand6+operand7)/3;
+			return average;
 		}
 //Radians change to Degrees
 		public static double toDegrees(double operand8) {
@@ -39,15 +39,15 @@ public class Calculate {
 			return discriminant;
 		}
 //From Mixed Number to Improper Fraction
-		public static String toImproperFrac(int WholeNum, int Numerator, int Denominator) {
-			int NewNumorator = WholeNum*Denominator+Numerator;
-			return (NewNumorator+"/"+Denominator);
+		public static String toImproperFrac(int wholenum, int numerator, int denominator) {
+			int newnumorator = wholenum*denominator+numerator;
+			return (newnumorator+"/"+denominator);
 		}
 //From Improper Fraction to Mixed Number
-		public static String toMixedNum(int Numerator, int Denominator) {
-			int wholeNum = Numerator/Denominator;
-			int newNumerator = Numerator%Denominator;
-			return (wholeNum+"_"+newNumerator+"/"+Denominator);
+		public static String toMixedNum(int numerator, int denominator) {
+			int wholenum = numerator/denominator;
+			int newnumerator = numerator%denominator; //remainder is 
+			return (wholenum+"_"+newnumerator+"/"+denominator);
 		}
 //FOILs an equation of integers
 		public static String foil(int a,int b,int c, int d) {
