@@ -1,0 +1,33 @@
+import java.util.Arrays;
+public class lotsOfCopies{
+public static void main(String[] args){
+int num=7;
+String strMain= "APCS";
+int[] arrMain= {1,2,3,4,5};
+changeMe(num, strMain, arrMain);
+System.out.println("In main, num:"+num);
+}
+public static void changeMe (int x, String str, int[] arr){
+//part one
+System.out.println("X before the change is:"+x);
+x=4;
+System.out.println("X after the change is:"+x);
+System.out.println("String before the change is:"+str);
+str="This is the new string";
+System.out.println("String after the change is:"+str);
+System.out.println("In changeMe, before the change, arrMain is:"+Arrays.toString(arr));
+arr[0]=12;
+System.out.println("In changeMe, after the change, arrMain is:"+Arrays.toString(arr));
+}
+x=3;
+int bint=x;
+x=23;
+System.out.println("b:"+bint);
+str= "hhhhhhhhh";
+String bstr= str;
+str="aiiiiiiii";
+System.out.println("bstr:"+bstr);
+int[] barr=arr;
+arr[0]=200;
+System.out.println("barr:"+Arrays.toString(barr)):
+}
