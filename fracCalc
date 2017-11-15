@@ -1,0 +1,115 @@
+//Jin Kim
+//11/15/17
+//2nd Period Dreyer
+package fracCalc;
+import java.util.*;
+public class FracCalc {
+
+    public static void main(String[] args)
+    {
+        // TODO: Read the input from the user and call produceAnswer with an equation
+     	Scanner cs = new Scanner(System.in); //takes input
+    	do
+    	{
+    	String input = cs.nextLine(); //must take in a string
+    	if (input.equals("Quit"))
+    		break; //ends program
+    	System.out.println(produceAnswer(input));
+    	} while(true); //if input is given
+    	cs.close();
+    }
+    
+    // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
+    // This function takes a String 'input' and produces the result
+    //
+    // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
+    //      e.g. input ==> "1/2 + 3/4"
+    //        
+    // The function should return the result of the fraction after it has been calculated
+    //      e.g. return ==> "1_1/4"
+    public static String produceAnswer(String input)
+    {
+    	String[] fracterms = input.split(" ");
+        String firstString = fracterms[0]; //separate the terms into three
+        String operator = fracterms[1];
+        String secondString = fracterms[2];
+        if(secondString=="0") {
+        return "You cannot divide by zero!";
+        }
+        boolean multiOp = false;
+        if (fracterms.length > 3)
+        	multiOp = true;
+        
+        int[] firstTerm = parse(firstString); //method lower in code
+        int[] secondTerm = parse(secondString);
+        int[] result = {0, 0, 1};
+        int numerator;
+        int denominator;
+        switch (operator) {
+        	case "+": //addition
+        		if (firstTerm[0] < 0)
+        			numerator = ((firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2]);
+        		else
+        			numerator = ((firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2]);
+        		
+        		if (secondTerm[0] < 0)
+        			numerator += ((secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2]);
+        		else
+        			numerator += ((secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2]);
+        		
+        		denominator = firstTerm[2] * secondTerm[2];
+        		
+        		result[1] = numerator;
+        		result[2] = denominator;
+        		break;
+        	case "-": //subtraction
+        		if (firstTerm[0] < 0)
+        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
+        		else
+        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
+        		
+        		if (secondTerm[0] < 0)
+        			numerator -= (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
+        		else
+        			numerator -= (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
+        		
+        		denominator = firstTerm[2] * secondTerm[2];
+        		
+        		result[1] = numerator;
+        		result[2] = denominator;
+        		break;
+        	case "*": //multiplication
+        		if (firstTerm[0] < 0)
+        			numerator = firstTerm[0] * firstTerm[2] - firstTerm[1];
+        		else
+        			numerator = firstTerm[0] * firstTerm[2] + firstTerm[1];
+        		
+        		if (secondTerm[0] < 0)
+        			numerator *= secondTerm[0] * secondTerm[2] - secondTerm[1];
+        		else
+        			numerator *= secondTerm[0] * secondTerm[2] + secondTerm[1];
+        		
+        		denominator = firstTerm[2] * secondTerm[2];
+        		
+        		result[1] = numerator;
+        		result[2] = denominator;
+        		break;
+        	case "/": //division
+        		if (firstTerm[0] < 0)
+        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
+        		else
+        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
+        		
+        		if (secondTerm[0] < 0)
+        			denominator = (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
+        		else
+        			denominator = (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
+
+        		result[1] = numerator;
+        		result[2] = denominator;
+        		break;
+    }
+
+    // TODO: Fill in the space below with any helper methods that you think you will need
+    }
+}
