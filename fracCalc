@@ -27,89 +27,45 @@ public class FracCalc {
     //        
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
-    public static String produceAnswer(String input)
-    {
-    	String[] fracterms = input.split(" ");
-        String firstString = fracterms[0]; //separate the terms into three
-        String operator = fracterms[1];
-        String secondString = fracterms[2];
-        if(secondString=="0") {
-        return "You cannot divide by zero!";
-        }
-        boolean multiOp = false;
-        if (fracterms.length > 3)
-        	multiOp = true;
-        
-        int[] firstTerm = parse(firstString); //method lower in code
-        int[] secondTerm = parse(secondString);
-        int[] result = {0, 0, 1};
-        int numerator;
-        int denominator;
-        switch (operator) {
-        	case "+": //addition
-        		if (firstTerm[0] < 0)
-        			numerator = ((firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2]);
-        		else
-        			numerator = ((firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2]);
-        		
-        		if (secondTerm[0] < 0)
-        			numerator += ((secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2]);
-        		else
-        			numerator += ((secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2]);
-        		
-        		denominator = firstTerm[2] * secondTerm[2];
-        		
-        		result[1] = numerator;
-        		result[2] = denominator;
-        		break;
-        	case "-": //subtraction
-        		if (firstTerm[0] < 0)
-        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
-        		else
-        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
-        		
-        		if (secondTerm[0] < 0)
-        			numerator -= (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
-        		else
-        			numerator -= (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
-        		
-        		denominator = firstTerm[2] * secondTerm[2];
-        		
-        		result[1] = numerator;
-        		result[2] = denominator;
-        		break;
-        	case "*": //multiplication
-        		if (firstTerm[0] < 0)
-        			numerator = firstTerm[0] * firstTerm[2] - firstTerm[1];
-        		else
-        			numerator = firstTerm[0] * firstTerm[2] + firstTerm[1];
-        		
-        		if (secondTerm[0] < 0)
-        			numerator *= secondTerm[0] * secondTerm[2] - secondTerm[1];
-        		else
-        			numerator *= secondTerm[0] * secondTerm[2] + secondTerm[1];
-        		
-        		denominator = firstTerm[2] * secondTerm[2];
-        		
-        		result[1] = numerator;
-        		result[2] = denominator;
-        		break;
-        	case "/": //division
-        		if (firstTerm[0] < 0)
-        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
-        		else
-        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
-        		
-        		if (secondTerm[0] < 0)
-        			denominator = (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
-        		else
-        			denominator = (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
+public static String produceAnswer(String input)
+{
+//add stuff here using operands
+	String temp=input;
+	String operand1=temp.substring(0,temp.indexOf(' '));
+	temp=temp.substring(temp.indexOf(' ')+1);
+	String operand2=temp.substring(0,temp.indexOf(' '));
+	temp=temp.substring(temp.indexOf(' ')+1);
+	String operand3=temp;
+	String newOpWhole=findWhole(operand2); //where the answer will be produced
+	String newOpNum=findNum(operand2);
+	String newOpDen=findDen(operand2);
+	String finalAnswer= "whole:"+newOpWhole+" numerator:"+newOpNum+" denominator:"+newOpDen;
+	return finalAnswer;
+  }
 
-        		result[1] = numerator;
-        		result[2] = denominator;
-        		break;
-    }
-
-    // TODO: Fill in the space below with any helper methods that you think you will need
-    }
+public static String findNum(String str1) { //numerator
+	if(str1.contains(" ")) {
+		return str1.substring(str1.indexOf(' ')+1,str1.indexOf('/'));
+	}else if(str1.contains("/")) {
+		return str1.substring(0,str1.indexOf('/'));
+	}else {
+		return "0";
+	}
+}
+public static String findWhole(String str1) { //whole number
+	if(str1.contains("_")) {
+		return str1.substring(0,str1.indexOf('_'));
+	}else if(str1.contains("/")) {
+		return "0";
+	}else {
+		return str1;
+	}
+}
+public static String findDen(String str1) { //denominator
+	if(str1.contains("/")) {
+		return str1.substring(str1.indexOf("/")+1);
+	}else {
+		return "1";
+	}
+	}
 }
