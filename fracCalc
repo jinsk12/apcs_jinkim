@@ -4,10 +4,9 @@
 package fracCalc;
 import java.util.*;
 public class FracCalc {
-
 	    public static void main(String[] args) 
 	    {
-	        // TODO: Read the input from the user and call produceAnswer with an equation
+	        //Takes in input and uses the below method to calculate an answer
 	    	Scanner cs = new Scanner(System.in);
 	    	do
 	    	{
@@ -29,7 +28,6 @@ public class FracCalc {
 	    //Converts to integer for calculations; Method at the bottom of the code.  
 	        int[] firstTerm = parseInt(firstString);
 	        int[] secondTerm = parseInt(secondString);
-	        
 	        boolean multiOperator = false;
 	        if (allTerms.length > 3)
 	        	multiOperator = true;
@@ -49,14 +47,11 @@ public class FracCalc {
 	        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
 	        		else
 	        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
-	        		
 	        		if (secondTerm[0] < 0)
 	        			numerator += (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
 	        		else
 	        			numerator += (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
-	        		
 	        		denominator = firstTerm[2] * secondTerm[2];
-	        		
 	        		results[1] = numerator;
 	        		results[2] = denominator;
 	        		break;
@@ -66,14 +61,11 @@ public class FracCalc {
 	        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
 	        		else
 	        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
-	        		
 	        		if (secondTerm[0] < 0)
 	        			numerator -= (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
 	        		else
 	        			numerator -= (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
-	        		
 	        		denominator = firstTerm[2] * secondTerm[2];
-	        		
 	        		results[1] = numerator;
 	        		results[2] = denominator;
 	        		break;
@@ -83,12 +75,10 @@ public class FracCalc {
 	        			numerator = (firstTerm[0] * firstTerm[2] - firstTerm[1]) * secondTerm[2];
 	        		else
 	        			numerator = (firstTerm[0] * firstTerm[2] + firstTerm[1]) * secondTerm[2];
-	        		
 	        		if (secondTerm[0] < 0)
 	        			denominator = (secondTerm[0] * secondTerm[2] - secondTerm[1]) * firstTerm[2];
 	        		else
 	        			denominator = (secondTerm[0] * secondTerm[2] + secondTerm[1]) * firstTerm[2];
-
 	        		results[1] = numerator;
 	        		results[2] = denominator;
 	        		break;
@@ -98,32 +88,24 @@ public class FracCalc {
 	        			numerator = firstTerm[0] * firstTerm[2] - firstTerm[1];
 	        		else
 	        			numerator = firstTerm[0] * firstTerm[2] + firstTerm[1];
-	        		
 	        		if (secondTerm[0] < 0)
 	        			numerator *= secondTerm[0] * secondTerm[2] - secondTerm[1];
 	        		else
 	        			numerator *= secondTerm[0] * secondTerm[2] + secondTerm[1];
-	        		
-	        		denominator = firstTerm[2] * secondTerm[2];
-	        		
+	        		denominator = firstTerm[2] * secondTerm[2];	
 	        		results[1] = numerator;
 	        		results[2] = denominator;
 	        		break;
-	   //Extra Credit: Rejects other forms  
-	        	default:
-	        		return "Invalid Form, please start again.";
 	        }
 	   //Reduces fraction for final answer, then reformatted for the final answer to be returned
 	        reduceAnswer(results);
 	        String finalAnswer = reformatAnswer(results);
-	        
 	        if (multiOperator) {
-	        	String temp = finalAnswer;
+	        	String temporaryAnswer = finalAnswer;
 	        	for(int i = 4; i < allTerms.length; i += 2)
-	        		temp += " " + allTerms[i - 1] + " " + allTerms[i];
-	        	finalAnswer = produceAnswer(temp);
+	        		temporaryAnswer += " " + allTerms[i - 1] + " " + allTerms[i];
+	        	finalAnswer = produceAnswer(temporaryAnswer);
 	        }
-	        
 	        return finalAnswer;
 	    }	
 //Changes the numbers to its most simple form
@@ -134,36 +116,15 @@ public class FracCalc {
 	    		arr[1] *= -1;
 	    		arr[2] *= -1;
 	    	}
-	    	
 	    	arr[0] = arr[1] / arr[2];
 	    	arr[1] %= arr[2];
-	    	
 	    	int gcf = gcf(arr[1], arr[2]);
 	    	arr[1] /= gcf;
 	    	arr[2] /= gcf;
-	    	
 	    	if (arr[0] < 0 && arr[1] < 0)
 	    		arr[1] *= -1;
 	    }
-//Changes answer for final result  
-	    public static String reformatAnswer(int[] arr)
-	    {
-	    	String input = arr[0] + "_" + arr[1] + "/" + arr[2];
-
-	    	if (input.startsWith("0_"))
-	        	input = input.substring(2);
-	    	
-	    	if (input.indexOf("_0/") > 0)
-	    		input = input.substring(0, input.indexOf("_0/"));
-	    	else if (input.indexOf("0/") == 0)
-	    		input = "0";
-	    	
-	    	if (input.endsWith("/1"))
-	    		input = input.substring(0, input.length() - 2);
-	    	
-	    	return input;
-	    }
-//From math calculator, to determine the greatest common factor for calculations
+//From math calculator, to determine the greatest common factor for calculations (Copied from Calculate)
 	    public static int gcf(int operand1, int operand2) {
 			int initial;
 			operand1 = Math.abs(operand1);
@@ -171,9 +132,9 @@ public class FracCalc {
 			for(initial = operand2; !(isDivisibleBy(operand2, initial) && isDivisibleBy(operand1, initial)); initial--) {}
 			return initial;
 		}
-//From math calculator
+//Adjusted from math calculator
 	    public static boolean isDivisibleBy(int dividend, int divisor) {
-	    	//Cannot divide by zero.
+	    	//Exception: Cannot divide by zero.
 			if(divisor == 0) {
 				throw new IllegalArgumentException();
 			}
@@ -182,28 +143,42 @@ public class FracCalc {
 			} else {
 				return false;
 			}
-			
 		}
+//Changes answer for final result  
+	    public static String reformatAnswer(int[] finalArr)
+	    {
+	    	String input = finalArr[0] + "_" + finalArr[1] + "/" + finalArr[2];
+	    	if (input.startsWith("0_"))
+	        	input = input.substring(2);
+	    	if (input.indexOf("_0/") > 0)
+	    		input = input.substring(0, input.indexOf("_0/"));
+	    	else if (input.indexOf("0/") == 0)
+	    		input = "0";
+	    	if (input.endsWith("/1"))
+	    		input = input.substring(0, input.length() - 2);
+	    	return input;
+	    }
 //Converts String to Integer
-public static int[] parseInt(String input)
+public static int[] parseInt(String operand)
 {
 	int whole = 0;
     int numerator = 0;
     int denominator = 1;
-    if (input.indexOf('_') >= 0)
+    if (operand.indexOf('_') >= 0)
     {
-    	whole = Integer.parseInt(input.substring(0, input.indexOf('_')));
-    	numerator = Integer.parseInt(input.substring(input.indexOf('_') + 1, input.indexOf('/')));
-    	denominator = Integer.parseInt(input.substring(input.indexOf('/') + 1));
+    	//Utilizes the space to separate by the indexOf substrings and creates integer variables
+    	whole = Integer.parseInt(operand.substring(0, operand.indexOf('_')));
+    	numerator = Integer.parseInt(operand.substring(operand.indexOf('_') + 1, operand.indexOf('/')));
+    	denominator = Integer.parseInt(operand.substring(operand.indexOf('/') + 1));
     }
-    else if (input.indexOf('/') >= 0)
+    else if (operand.indexOf('/') >= 0)
     {
-    	numerator = Integer.parseInt(input.substring(0, input.indexOf('/')));
-    	denominator = Integer.parseInt(input.substring(input.indexOf('/') + 1));
+    	numerator = Integer.parseInt(operand.substring(0, operand.indexOf('/')));
+    	denominator = Integer.parseInt(operand.substring(operand.indexOf('/') + 1));
     }
     else
-    	whole = Integer.parseInt(input);
-    int[] arr = {whole, numerator, denominator};
-    return arr;
+    	whole = Integer.parseInt(operand);
+    int[] finalArr = {whole, numerator, denominator};
+    return finalArr;
 	}
 }
