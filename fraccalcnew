@@ -1,0 +1,49 @@
+/*Jin Kim
+ * 12/18/17
+ * Ms. Dreyer 2nd Period
+ */
+package fracCalc;
+import java.util.*;
+public class FracCalc {
+    public static void main(String[] args) {
+        //Copied from original Frac Calc.
+    	Scanner cs = new Scanner(System.in);
+    	do
+    	{
+    	System.out.println("Insert values to be calculated:");
+    	String input = cs.nextLine();
+    	if (input.equalsIgnoreCase("quit"))
+    		break;
+    	System.out.println(produceAnswer(input));
+    	} while(true);
+    	cs.close();
+    }
+//Calls all methods and produces the final answer.
+    public static String produceAnswer(String equation){ 
+        String[] fractionSave = equation.split(" ");
+    	if(fractionSave.length != 3) {
+    	//Extra Credit adapted from last Frac Calc. Invalid forms rejected.
+    		throw new IllegalArgumentException("Invalid Format.");
+    	}
+    	String operator = fractionSave[1];
+    	//New fractions created
+    	Fraction fracOne = new Fraction(fractionSave[0]);
+    	Fraction fracTwo = new Fraction(fractionSave[2]);
+    	String answer;
+    	/*Whether added or subtracted, the calculator will run the addition code
+    	 * as the subtraction can be manipulated by using negative signs.
+    	 */
+    	if(operator.equals("+") || operator.equals("-")) {
+    		answer = Fraction.add(fracOne.getInfo(),fracTwo.getInfo(),operator);
+    	/* The same goes for the division code. The division can simply be
+    	 * multiplied by the reciprocal.
+    	 */
+    	}else if(operator.equals("*") || operator.equals("/")) {
+    		answer = Fraction.multiply(fracOne.getInfo(),fracTwo.getInfo(),operator);
+    	//Anything else used will not be the right format.
+    	}else{
+    		throw new IllegalArgumentException("Invalid Format.");
+    	}
+		return(answer);
+    }
+}
