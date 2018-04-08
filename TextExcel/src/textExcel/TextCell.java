@@ -1,29 +1,49 @@
 package textExcel;
 
 public class TextCell implements Cell {
-	private String cellText;
-	public TextCell(String cellText) {
-		this.cellText=cellText;
+	
+	private String value;
+
+	public TextCell(String value) {
+		this.value = value;
 	}
-	// text for spreadsheet cell display, must be exactly length 10
-	public String abbreviatedCellText() { 
-		if(cellText.contains("\"")) {
-			if(cellText.length()<12) {
-				String result=cellText.substring(1,cellText.length()-1);
-				for(int i=0; i<(12-cellText.length());i++) {
-					result+=" ";
-				}
-				return result;
-			}else {
-				return cellText.substring(1,11);
-			}
-		}else {
-			return cellText.substring(0,10);
+	
+	public String truncateAndPad(){
+		
+		//creates a new value so the original is not modified
+		String returnVal = "";
+		//gets rid of quotation marks
+		if(value.contains("\"") == true){
+			returnVal = value.substring(1, value.length() - 1);
+		}
+		// adds a space at the end
+		if(returnVal.length() == 0){
+			returnVal += " ";
 		}
 		
+		//only takes first 10 characters if string is longer than 10
+		if(returnVal.length() > 10){
+			returnVal = returnVal.substring(0, 10);
+			return returnVal;
+		}else{
+			
+			//fills in the spaces to make the value left aligned
+			while(returnVal.length() != 10){
+				returnVal += " ";
+
+			}
+			return returnVal;
+		}
 	}
-	// text for individual cell inspection, not truncated or padded
+	
+	@Override
+	public String abbreviatedCellText() {
+		return truncateAndPad();
+	}
+
+	@Override
 	public String fullCellText() {
-		return cellText;
+		return value;
 	}
+
 }

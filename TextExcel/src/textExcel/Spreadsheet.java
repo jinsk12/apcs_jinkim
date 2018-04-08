@@ -1,40 +1,41 @@
-//Jin Kim
-//2nd Period
-//3/22/18
 package textExcel;
 
 import java.util.Arrays;
 
+// Update this file with your own code.
+
 public class Spreadsheet implements Grid
 {
-	//field needed; creates the main spreadsheet array
-	private Cell[][] spreadsheetArray;
+	private Cell[][] cellArray;
 	public Spreadsheet() {
-		//Makes array for sheet (20x12) as requested by packet
-		spreadsheetArray=new Cell[20][12];
-		//Utilizes nested for loop to create empty cells in all the
-		//designated cells before phrases are placed in certain cells
-		for(int i=0;i<spreadsheetArray.length;i++) {
-			for (int j=0;j<spreadsheetArray[i].length;j++) {
-				spreadsheetArray[i][j]=new EmptyCell();
+		cellArray=new Cell[20][12];
+		for(int i=0;i<cellArray.length;i++) {
+			for (int j=0;j<cellArray[i].length;j++) {
+				cellArray[i][j]=new EmptyCell();
 			}
 		}
 	}
-	//Checkpoint 2 Note: If user enters certain commands into the main method,
-	//the command will be processed by this method; it should include the following:
-	//clear();, assignCell();, and inspectCell();
-	public String processCommand(String command)
-	{
-		if(command.equalsIgnoreCase("clear")) {
-			clear();
+
+	public String processCommand(String command){
+		//note to sellf:
+		if(command.toLowerCase().equals("clear")) {
+			//clears all
+			for(int i=0;i<cellArray.length;i++) {
+				for (int j=0;j<cellArray[i].length;j++) {
+					cellArray[i][j]=new EmptyCell();
+				}
+			}
 			return getGridText();
 		}else if(command.contains("=")) {
 			assignCell(command);
 			return getGridText();
-		}else if(command.length()==2||command.length()==3) {
+		}else if(command.length()==2) {
 			Location position=new SpreadsheetLocation(command);
 			return inspectCell(position);
-		//clear cell
+		}else if(command.length()==3) {
+			Location position=new SpreadsheetLocation(command);
+			return inspectCell(position);
+		//clear cell at one cell
 		}else if (command.toLowerCase().contains("clear")&& command.length()>5){
 			Location position=new SpreadsheetLocation(command.substring(6));
 			clearCell(position);
@@ -47,47 +48,46 @@ public class Spreadsheet implements Grid
 		return getCell(loc).fullCellText();
 	}
 	public String assignCell(String input) {
-		String[] assignment=input.split("=", 2);
-		Location loc=new SpreadsheetLocation(assignment[0].substring(0,assignment[0].indexOf(" ")));
-		if(assignment[1].contains("\"")) {
-			spreadsheetArray[loc.getRow()][loc.getCol()]=new TextCell(assignment[1].substring(1));
-		}else if(assignment[1].contains("(")&&assignment[1].contains(")")){
-			spreadsheetArray[loc.getRow()][loc.getCol()]=new FormulaCell(assignment[1].substring(1).toLowerCase());
-		}else if(assignment[1].contains("%")) {
-			spreadsheetArray[loc.getRow()][loc.getCol()]=new PercentCell(assignment[1].substring(1));
+		String[] command=input.split("=", 2);
+		//splits by spaces to simplify command
+		Location loc=new SpreadsheetLocation(command[0].substring(0,command[0].indexOf(" ")));
+		if(command[1].contains("\"")) {
+			cellArray[loc.getRow()][loc.getCol()]=new TextCell(command[1].substring(1));
+		}else if(command[1].contains("(")){
+			cellArray[loc.getRow()][loc.getCol()]=new FormulaCell(command[1].substring(1), cellArray);
+		}else if(command[1].contains("%")) {
+			cellArray[loc.getRow()][loc.getCol()]=new PercentCell(command[1].substring(1));
 		}else {
-			spreadsheetArray[loc.getRow()][loc.getCol()]=new ValueCell(assignment[1].substring(1));
+			cellArray[loc.getRow()][loc.getCol()]=new ValueCell(command[1].substring(1));
 		}
 		
 		return getGridText();
 		
 	}
 	public String clear() {
-		for (int i=0;i<spreadsheetArray.length;i++) {
-			for (int j=0; j<spreadsheetArray[i].length;j++) {
-				spreadsheetArray[i][j]=new EmptyCell();
+		for (int i=0;i<cellArray.length;i++) {
+			for (int j=0; j<cellArray[i].length;j++) {
+				cellArray[i][j]=new EmptyCell();
 			}
 		}
 		return getGridText();
 	}
+	//empties out one cell
 	public String clearCell(Location loc) {
-		spreadsheetArray[loc.getRow()][loc.getCol()]=new EmptyCell();
+		cellArray[loc.getRow()][loc.getCol()]=new EmptyCell();
 		return getGridText();
 	}
-
-	public int getRows()
-	{
+//checkpoint one getters
+	public int getRows(){
 		return 20;
 	}
 
-	public int getCols()
-	{
+	public int getCols(){
 		return 12;
 	}
 
-	public Cell getCell(Location loc)
-	{
-		return spreadsheetArray[loc.getRow()][loc.getCol()];
+	public Cell getCell(Location loc){
+		return cellArray[loc.getRow()][loc.getCol()];
 	}
 
 	public String getGridText()
@@ -111,7 +111,7 @@ public class Spreadsheet implements Grid
 			}
 			result+="|";
 			for(int l=0;l<12;l++) {
-				result+=spreadsheetArray[k-1][l].abbreviatedCellText();
+				result+=cellArray[k-1][l].abbreviatedCellText();
 				result+="|";
 			}
 			result+="\n";
@@ -119,4 +119,7 @@ public class Spreadsheet implements Grid
 		return result;
 	}
 
+	public Cell[][] getCellArray() {
+		return cellArray;
+	}
 }

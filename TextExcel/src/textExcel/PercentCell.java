@@ -1,26 +1,21 @@
 package textExcel;
 
-public class PercentCell extends ValueCell{
-	private double decimal;
-	public PercentCell(String cellText) {
-		super(cellText);
-		decimal=Double.parseDouble(cellText.substring(0,cellText.length()-1));
-		String percentDecimal=(decimal/100.0)+"";
-		setCellText(percentDecimal);
-	}
-	public String abbreviatedCellText() {
-		String realDecimal=decimal+"";
-		String realDecimalPart=realDecimal.substring(0,realDecimal.indexOf("."));
-		String result=realDecimalPart;
-		if(realDecimal.length()<9) {
-			result+="%";
-			for(int i=0; i<9-realDecimalPart.length();i++) {
-				result+=" ";
-			}
-			return result;
-		}else {
-			return realDecimal.substring(0, 9)+"%";
-		}
+public class PercentCell extends RealCell{
 	
+	private String percent;
+	
+	//puts percent into super class of RealCell
+	public PercentCell(String percent){
+		this.percent = percent;
+		setRealCell(percent);
 	}
+	
+	//Changes the percentage sign into a decimal
+	public double getDoubleValue(){
+		String returnVal = getRealCell();
+		returnVal = returnVal.substring(0, returnVal.length() - 1);
+		return Double.parseDouble(returnVal) / 100.0;
+	}
+	
+	
 }

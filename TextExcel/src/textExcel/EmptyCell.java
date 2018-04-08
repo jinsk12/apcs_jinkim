@@ -1,16 +1,16 @@
 package textExcel;
 
 public class EmptyCell implements Cell{
-	private String cellText;
+	private String text;
 	public EmptyCell() {
-		this.cellText="";
+		this.text="";
 	}
-	// text for spreadsheet cell display, must be exactly length 10
+//A full cell box would have nothing inside it
+		public String fullCellText() {
+			return "";
+		}
+//An empty cell will hold ten spaces
 	public String abbreviatedCellText() { 
 		return "          ";
-	}
-	// text for individual cell inspection, not truncated or padded
-	public String fullCellText() {
-		return "";
 	}
 }

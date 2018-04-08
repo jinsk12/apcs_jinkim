@@ -3,28 +3,16 @@ package textExcel;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-// Update this file with your own code.
-
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-
-public class TextExcel
-{
-
-	public static void main(String[] args)
-	{
-	    Scanner userInput=new Scanner(System.in);
-	    Spreadsheet grid=new Spreadsheet();
-	    boolean done=true;
-	    while(done) {
-        	String input=userInput.nextLine();
-        	if(input.equalsIgnoreCase("Quit")){
-        		done=false;
-        	}else{
-        		System.out.println(grid.processCommand(input));
-        	}
-	    }
-	    
+public class TextExcel{
+	public static void main(String[] args){
+		Spreadsheet excel = new Spreadsheet();	
+		
+		Scanner input = new Scanner(System.in);
+		String command = "";
+		while(command.equalsIgnoreCase("quit") != true){
+			System.out.println("Command:");
+			command = input.nextLine();
+			System.out.println(excel.processCommand(command));
+		}
 	}
 }
