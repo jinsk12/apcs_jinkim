@@ -10,11 +10,9 @@ abstract class RealCell implements Cell {
 	public void setRealCell(String value){
 		text = value;
 	}
-	
 	public String abbreviatedCellText() {
 		return truncate();
 	}
-
 	public String fullCellText() {
 
 		String returnVal = text;
@@ -47,52 +45,45 @@ abstract class RealCell implements Cell {
 			}else{
 				return returnVal.substring(0,returnVal.length() - 2);
 			}
-			
 		//if it doesn't end in a .0, then checks for unnecessary zeroes to possibly cut out
 		}else{
 			return checkZeroes(returnVal);
 		}
 
 	}
-	
-	
 	public String truncate(){
-		String returnVal = text;
-		if(returnVal.charAt(0) == '('){
-			returnVal = Double.toString(getDoubleValue());
+		String returnsThis = text;
+		if(returnsThis.charAt(0) == '('){
+			returnsThis = Double.toString(getDoubleValue());
 		}
 		//if its a whole number without a percent, make it a double by adding .0 to it
-		if(!returnVal.contains(".") && !returnVal.contains("%") ){
-			returnVal += ".0";
+		if(!returnsThis.contains(".") && !returnsThis.contains("%") ){
+			returnsThis += ".0";
 		}
 		
 		//gets rid of unnecessary zeroes at the end of the value
-		returnVal = checkZeroes(returnVal);
+		returnsThis = checkZeroes(returnsThis);
 		//checks for unnecessary zeroes again and cuts off the last one to make it a .0 if there is
-		if(returnVal.indexOf(".00") + 3 == returnVal.length()){
-			returnVal = returnVal.substring(0, returnVal.length() - 1);
+		if(returnsThis.indexOf(".00") + 3 == returnsThis.length()){
+			returnsThis = returnsThis.substring(0, returnsThis.length() - 1);
 		}
 
 		//checks to see if there is a percent sign and takes off the decimal point
-		if(returnVal.contains("%")){
-			returnVal = returnVal.substring(0, returnVal.indexOf('.'));
-			returnVal += "%";
+		if(returnsThis.contains("%")){
+			returnsThis = returnsThis.substring(0, returnsThis.indexOf('.'));
+			returnsThis += "%";
 		}
 		//checks to see if the value is longer than 10, if it is it cuts it off at the tenth character,
 		//or adds spaces to fill it up to ten spaces
-		if(returnVal.length() >= 10){
-			returnVal = returnVal.substring(0, 10);
-			
+		if(returnsThis.length() >= 10){
+			returnsThis = returnsThis.substring(0, 10);
 		}else{
-			
-			while(returnVal.length() != 10){
-				returnVal += " ";
+			while(returnsThis.length() != 10){
+				returnsThis += " ";
 			}
 		}
-		
-		return returnVal;
+		return returnsThis;
 	}
-	
 	abstract double getDoubleValue();
 
 	public String checkZeroes(String value){
@@ -105,23 +96,17 @@ abstract class RealCell implements Cell {
 			//checks for two zeroes in a row and saves the value to continuosZero
 			if(countZero >= 2){
 				continuousZero = countZero;
-
 			}
-			
 			//checks for zeros or if the value is at a .0 (which it doesn't count)
 			if(value.charAt(count) == '0' && value.charAt(count - 1) != '.'){
 				countZero++;
-
 			}else{
 				// if its anything but a zero without a decimal point near it reset the count for zeroes
 				countZero = 0;
-
 			}
 			//decrement by one to go down the value
 			count--;
-
 		}
-		
 		//returns the value after substring the amount of unnecessary zereos
 		return value.substring(0, value.length() - continuousZero);
 	}

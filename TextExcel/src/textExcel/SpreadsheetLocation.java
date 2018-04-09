@@ -3,7 +3,7 @@ package textExcel;
 public class SpreadsheetLocation implements Location
 {
 	private int row;
-	private int col;
+	private int column;
 	
     @Override
     public int getRow(){
@@ -12,13 +12,13 @@ public class SpreadsheetLocation implements Location
     }
     @Override
     public int getCol(){
-        return col;
+        return column;
     }
     public SpreadsheetLocation(String cellName)
     {
-    	col = cellName.charAt(0);
+    	column = cellName.charAt(0);
     	//subtracts the value of 'A' to get the location of the column based on the character used
-    	col = Character.toUpperCase(col) - 'A';
+    	column = Character.toUpperCase(column) - 'A';
     	//changes the string number at the end to an integer
     	row = Integer.parseInt(cellName.substring(1));
     }

@@ -7,9 +7,7 @@ public class TextCell implements Cell {
 	public TextCell(String value) {
 		this.value = value;
 	}
-	
 	public String truncateAndPad(){
-		
 		//creates a new value so the original is not modified
 		String returnVal = "";
 		//gets rid of quotation marks
@@ -26,7 +24,6 @@ public class TextCell implements Cell {
 			returnVal = returnVal.substring(0, 10);
 			return returnVal;
 		}else{
-			
 			//fills in the spaces to make the value left aligned
 			while(returnVal.length() != 10){
 				returnVal += " ";

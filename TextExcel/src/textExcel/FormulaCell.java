@@ -11,7 +11,6 @@ public class FormulaCell extends RealCell{
 		this.grid = spreadsheet;
 		setRealCell(formula);
 	}
-
 	public double getDoubleValue(){
 		String[] formula = getRealCell().split(" ");
 		if(formula.length == 3){
@@ -19,8 +18,6 @@ public class FormulaCell extends RealCell{
 			return Double.parseDouble(formula[1]);
 		}
 		if((formula[1].toUpperCase().equals("AVG")) || (formula[1].toUpperCase().equals("SUM"))){
-			
-			
 			if(formula[1].toUpperCase().equals("AVG")){
 				double count = 0.0;
 				formula[2] = formula[2].toUpperCase();
@@ -72,11 +69,7 @@ public class FormulaCell extends RealCell{
 						}else{
 							formula[i] = "0.0";
 						}
-
-						
-
 				}
-				
 				if(formula[i+2].toUpperCase().charAt(0) >= 'A' && formula[i+2].toUpperCase().charAt(0) <= 'L'){
 						formula[i+2] = formula[i+2].toUpperCase();
 						SpreadsheetLocation cell = new SpreadsheetLocation(formula[i + 2]);
@@ -89,12 +82,10 @@ public class FormulaCell extends RealCell{
 						}
 						
 				}
-				
 				num = Double.parseDouble(formula[i]);
 				System.out.println(num);
 				secondNum = Double.parseDouble(formula[i + 2]);
 				System.out.println(secondNum);
-				
 				if(formula[i + 1].equals("*")){
 					storeVal = num * secondNum;
 				}else if(formula[i + 1].equals("/")){
