@@ -1,16 +1,13 @@
 package textExcel;
-
-public class EmptyCell implements Cell{
-	private String text;
-	public EmptyCell() {
-		this.text="";
-	}
-//A full cell box would have nothing inside it
-		public String fullCellText() {
-			return "";
-		}
-//An empty cell will hold ten spaces
-	public String abbreviatedCellText() { 
+//Jin Kim
+//2nd Period Dreyer
+public class EmptyCell implements Cell {
+	//prints out ten spaces because there are ten spaces in an empty cell
+	public String abbreviatedCellText() {
 		return "          ";
+	}
+	//a full one would have absolutely nothing inside
+	public String fullCellText() {
+		return "";
 	}
 }

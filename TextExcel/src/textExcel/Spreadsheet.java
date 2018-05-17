@@ -1,111 +1,137 @@
 package textExcel;
-
-import java.util.Arrays;
-
-// Update this file with your own code.
-public class Spreadsheet implements Grid
-{
-	private Cell[][] cell;
-	public Spreadsheet() {
-		cell=new Cell[20][12];
-		//makes blank sheet to start
-		for(int i=0;i<cell.length;i++) {
-			for (int j=0;j<cell[i].length;j++) {
-				cell[i][j]=new EmptyCell();
-			}
-		}
+//Jin Kim
+//2nd Period Dreyer
+//Note: Ms. Dreyer said to make clear() so that I wouldn't have to copy code
+//over multiple times
+public class Spreadsheet implements Grid{
+	//some more fields
+	private int rows = 20;
+	private int cols = 12;
+	//constructor
+	public Spreadsheet(){
+		//fills the sheet with the same empty cells
+		 for(int i = 0; i < rows; i++){
+			 for(int j = 0; j < cols; j++){
+				 cells[i][j] = new EmptyCell();
+			 }
+		 }
 	}
-	public String inspectCell(Location loc) {
-		return getCell(loc).fullCellText();
-	}
-	public String clear() {
-		for (int i=0;i<cell.length;i++) {
-			for (int j=0; j<cell[i].length;j++) {
-				cell[i][j]=new EmptyCell();
-			}
-		}
-		return getGridText();
-	}
-//checkpoint one getters
+	//getters
 	public int getRows(){
-		return 20;
+		return this.rows;
 	}
 	public int getCols(){
-		return 12;
+		return this.cols;
 	}
 	public Cell getCell(Location loc){
-		return cell[loc.getRow()][loc.getCol()];
+		return cells[loc.getRow()][loc.getCol()];
 	}
 	public Cell[][] getCellArray() {
-		return cell;
+		return cells;
+	}
+	//makes the new sheet
+	private Cell [][] cells = new Cell[rows][cols];
+
+	//same as setting the initial sheet
+	public void clear(){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
+				cells[i][j] = new EmptyCell();
+			}
+		}
+	}
+	public void clearOne(String cell){
+		//similar to clear() except makes just one empty cell
+		SpreadsheetLocation userInput = new SpreadsheetLocation(cell);
+		cells[userInput.getRow()][userInput.getCol()] = new EmptyCell();
+	}
+	//2d array for rows and columns
+	public String processCommand(String command){
+		String[] separateCommand = command.split(" ");
+		//makes it upper case
+		separateCommand[0] = separateCommand[0].toUpperCase();
+		if(command.length()==0){
+			return "";
+		}else if(separateCommand.length >= 3){
+			String userInput = separateCommand[2] + "";
+			int coun = 3;
+			while(coun < separateCommand.length){
+				//adds the space that was taken out and the next part of the value
+				userInput =userInput+  " " + separateCommand[coun];
+				coun++;
+			}
+			String cell = separateCommand[0];
+			assignCells(userInput, cell);
+			return getGridText();
+			//3 or less would mean InspectCell() method
+		}else if(command.length() <= 3){
+			return InspectCell(separateCommand[0]);
+			//check if the user input has clear, has been changed to uppercase
+		} else if (separateCommand[0].equalsIgnoreCase("clear")){
+			//one or less wipes out the entire screen
+			if(separateCommand.length == 1){
+				 clear();
+				 return getGridText();
+				 //the others would assume that it would clear one cell: can use the first split
+				 //to determine which one to wipe
+			}else{
+				//in case the cell isnt uppercased
+				clearOne(separateCommand[1].toUpperCase());
+				return getGridText();
+			}
+		}
+		return "";
 	}
 	public String getGridText(){
-		String toBePrinted="";
-		//top for chars
-		toBePrinted+="   |";
-		for (int i=65; i<=76;i++) {
-			toBePrinted+=(char)i;
-			//every ten characters requires a '|'
-			for(int j=0; j<9; j++) {
-				toBePrinted+=" ";
-			}
-			toBePrinted+="|";
+		String sheet = "   |";
+		//makes the first row of capital letters
+		for(int i = 0; i < cols; i++){
+			//ten spaces, |, then the letter
+			sheet = sheet+ (char) ('A' + i) + "         |";
 		}
-		//adds new line every time to create more rows
-		toBePrinted=toBePrinted+"\n";
-		for(int k=1;k<=20;k++) {
-			if(k<10) {
-				//essentially makes the side parts from the packet
-				//if less than 10, it will only take up 1 space
-				toBePrinted=toBePrinted+k+"  ";
+		//fills in the grid
+		for(int i = 1; i <= rows; i++){
+			//makes new line at end of row and adds the number
+			sheet += "\n" + i;
+			//if it's less than ten, it prints out one more to compensate for the one digit less
+			if(i >= 10){
+				sheet = sheet+ " |";
 			}else{
-				//it will take two, but no more bc it is up to 20
-				toBePrinted=toBePrinted+k+" ";
+				sheet = sheet+  "  |";
 			}
-			toBePrinted+="|";
-			//prints out empty spaces
-			for(int l=0;l<12;l++) {
-				toBePrinted=toBePrinted+cell[k-1][l].abbreviatedCellText();
-				toBePrinted=toBePrinted+"|";
+			//sets values
+			for(int k = 0; k < cols; k++){
+				//i-1 bc zero based
+				sheet = sheet + cells[i-1][k].abbreviatedCellText() + "|";
 			}
-			toBePrinted=toBePrinted+"\n";
 		}
-		return toBePrinted;
+		//each row is reset to the next to begin the next row
+		sheet = sheet+ "\n";
+		//returns the entire sheet
+		return sheet;
 	}
-	public String assign(String input) {
-		//note to self: default: empty cell
-		String[] command=input.split("=", 2);
-		//splits by spaces to simplify command
-		Location loc=new SpreadsheetLocation(command[0].substring(0,command[0].indexOf(" ")));
-		if(command[1].contains("\"")) {
-			//quotation refers to a text cell
-			cell[loc.getRow()][loc.getCol()]=new TextCell(command[1].substring(1));
-		}else if(command[1].contains("%")) {
-			//percent obviously turns to a percent cell
-			cell[loc.getRow()][loc.getCol()]=new PercentCell(command[1].substring(1));
-		}else if(command[1].contains("(")){
-			//if it has the open parenthesis, means that there must be some sort of formula
-			cell[loc.getRow()][loc.getCol()]=new FormulaCell(command[1].substring(1), cell);
-		}else{
-			//has to be a value cell
-			cell[loc.getRow()][loc.getCol()]=new ValueCell(command[1].substring(1));
-		}
-		return getGridText();
+	public String InspectCell(String cell){
+		//displays cell text of the location given
+		SpreadsheetLocation a = new SpreadsheetLocation(cell);
+		return cells[a.getRow()][a.getCol()].fullCellText();
 	}
-	public String processCommand(String command){
-		//note to self: requires clear(individual cell and whole cell), assign value, and inspect
-		if(command.equalsIgnoreCase("clear")) {
-			//clears all
-			clear();
-			return getGridText();
-		}else if(command.contains("=")) {
-			assign(command);
-			return getGridText();
-		}else if(command.length()==2||command.length()==3) {
-			Location position=new SpreadsheetLocation(command);
-			return inspectCell(position);
+	//assigns the cell
+	//note to self: fix formulacell
+	public void assignCells(String input, String cell){
+		SpreadsheetLocation random = new SpreadsheetLocation(cell);
+		//assigns cell accordingly
+		//% -> percent cell
+		if(input.contains("%")){
+			cells[random.getRow()][random.getCol()] = new PercentCell(input);
+		//" -> textcell
+		}else if(input.contains("\"")){
+			cells[random.getRow()][random.getCol()] = new TextCell(input);
+		//( -> formulacell
+		}else if(input.contains("(")){
+			cells[random.getRow()][random.getCol()] = new FormulaCell(input, cells);
+			//anything else is value cell
 		}else{
-			return "";
+			cells[random.getRow()][random.getCol()] = new ValueCell(input);
 		}
 	}
 }

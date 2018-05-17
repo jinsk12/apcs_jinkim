@@ -1,20 +1,23 @@
 package textExcel;
-
+//Jin Kim
+//2nd Period Dreyer
+//Note to self: add unimplemented methods so it won't crash
 public class PercentCell extends RealCell{
-	private String percent;
-	//puts percent into super class of RealCell
-	public PercentCell(String percent){
-		this.percent = percent;
-		setRealCell(percent);
+	private String input = "";
+	private double newForm = 0.0;
+	public PercentCell(String input){
+		this.input = input;
+		//stores value in parent class
+		setRealCell(input);
 	}
-	//Changes the percentage sign into a decimal
 	public double getDoubleValue(){
-		String toBePrinted = getRealCell();
-		//-1 bc it is a percent key at the end
-		toBePrinted = toBePrinted.substring(0, toBePrinted.length() - 1);
-		//makes it a double decimal by dividing by 100.0
-		return Double.parseDouble(toBePrinted) / 100.0;
+		//in decimal form
+		newForm = Double.parseDouble(input.substring(0, input.length()-1))/100;
+		return newForm;
 	}
-	
-	
+	@Override
+	public String fullCellText() {
+		// TODO Auto-generated method stub
+		return input;
+	}
 }

@@ -1,46 +1,48 @@
 package textExcel;
-
+//Jin Kim
+//2nd Period Dreyer
+//Work on committing issues :(
 public class TextCell implements Cell {
-	
-	private String value;
-
-	public TextCell(String value) {
-		this.value = value;
-	}
-	public String truncateAndPad(){
-		//creates a new value so the original is not modified
-		String returnVal = "";
-		//gets rid of quotation marks
-		if(value.contains("\"") == true){
-			returnVal = value.substring(1, value.length() - 1);
+		//more fields
+		private String text = "";
+		private String abbreviated = "";
+		//contructor
+		public TextCell(String strcontents){
+			this.text = strcontents;
 		}
-		// adds a space at the end
-		if(returnVal.length() == 0){
-			returnVal += " ";
+		//setters
+		public void setText(String strcontents){
+			this.text = strcontents;
 		}
-		
-		//only takes first 10 characters if string is longer than 10
-		if(returnVal.length() > 10){
-			returnVal = returnVal.substring(0, 10);
-			return returnVal;
-		}else{
-			//fills in the spaces to make the value left aligned
-			while(returnVal.length() != 10){
-				returnVal += " ";
-
-			}
-			return returnVal;
+		//auto generated
+		public void setAbbreviated(String abbreviated) {
+			this.abbreviated = abbreviated;
+		}
+		//getter
+		public String getAbbreviated() {
+			return abbreviated;
+		}
+		public String abbreviatedCellText() {
+			//so that fullCellText is unaffected
+					String shortenedStr = "";
+					//gets rid of quotes
+					while(text.contains("\"")){
+						shortenedStr = text.substring(1, text.length() - 1);
+					}
+					//Reduces string to first 10
+					if(shortenedStr.length() > 10){
+						shortenedStr = shortenedStr.substring(0, 10);
+						return shortenedStr;
+					}else{
+						//fills in the spaces so total length will be 10
+						for(int i=0; i<10-shortenedStr.length(); i++){
+							shortenedStr += " ";
+						}
+						return shortenedStr;
+					}
+		}
+		//returns the whole string
+		public String fullCellText() {
+			return text;
 		}
 	}
-	
-	@Override
-	public String abbreviatedCellText() {
-		return truncateAndPad();
-	}
-
-	@Override
-	public String fullCellText() {
-		return value;
-	}
-
-}

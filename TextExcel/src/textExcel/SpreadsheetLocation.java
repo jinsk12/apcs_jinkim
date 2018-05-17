@@ -1,25 +1,26 @@
 package textExcel;
-
-public class SpreadsheetLocation implements Location
-{
-	private int row;
-	private int column;
-	
-    @Override
+//Jin Kim
+//2nd Period Dreyer
+//Update this file with your own code.
+public class SpreadsheetLocation implements Location{
+	//just some more fields
+	private char ch;
+    private int num;
+    //getters that I need
     public int getRow(){
-    	//zero indexing
-        return row - 1;
+    	return num-1;
     }
-    @Override
     public int getCol(){
-        return column;
+    //subtracts bc capital letters start differently
+    	return ch-65;
     }
-    public SpreadsheetLocation(String cellName)
-    {
-    	column = cellName.charAt(0);
-    	//subtracts the value of 'A' to get the location of the column based on the character used
-    	column = Character.toUpperCase(column) - 'A';
-    	//changes the string number at the end to an integer
-    	row = Integer.parseInt(cellName.substring(1));
+    //constructor
+    public SpreadsheetLocation(String place) {
+    	//gotta make the sheet capital for the header
+    	String letter=place.substring(0,1).toUpperCase();
+    	ch=letter.charAt(0);
+    	//gotta make it an int afterwards
+    	num=Integer.parseInt(place.substring(1));
     }
+    //note to self: somehow get it this file to commit to github
 }

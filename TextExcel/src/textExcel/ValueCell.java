@@ -1,13 +1,22 @@
 package textExcel;
-
+//Jin Kim
+//2nd Period Dreyer
 public class ValueCell extends RealCell{
-	private String value;
-	//set num to value and value into the superclass of RealCell
-	public ValueCell(String num){
-		this.value = num;
-		setRealCell(num);
+	private String value = "";
+	public ValueCell(String val){
+		value = val;
+		//stores value
+		setRealCell(val);
 	}
 	public double getDoubleValue(){
-		return Double.parseDouble(getRealCell());
+		//changes string to double
+		double placeHolder = Double.parseDouble(value);
+		return placeHolder;
 	}
+	@Override//auto generated
+	public String fullCellText() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+
 }
